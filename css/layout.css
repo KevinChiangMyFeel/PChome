@@ -1545,7 +1545,21 @@ html, body {
   }
 }
 
+#contactUs .block .infomation .discriptionGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 #contactUs .block .infomation .discriptionGroup .discription {
+  text-align: center;
   font-weight: bold;
   font-size: 1.5rem;
   line-height: 2.25rem;
@@ -1565,7 +1579,7 @@ html, body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 0 -0.5rem;
+  width: 100%;
   max-width: 465px;
 }
 
@@ -1583,6 +1597,13 @@ html, body {
   padding: 0.25rem 0rem;
   font-weight: bold;
   border-radius: 0.25rem;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#contactUs .block .infomation .discriptionGroup .buttonGroup div a:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
 
 #contactUs .block .infomation .pic {
