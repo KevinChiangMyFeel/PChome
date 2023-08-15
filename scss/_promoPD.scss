@@ -35,16 +35,16 @@
             margin-bottom: 1rem;
             font-weight: bold;
             font-size: 1rem;
-            line-height: 1rem;
+            line-height: 1*1.5rem;
             text-align: start;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
-            height: calc(1rem * 2);
+            height: calc(1rem * 1.5 * 2);
             overflow: hidden;
             &.product{
                 -webkit-line-clamp: 3;
-                height: calc(1rem * 3);
+                height: calc(1rem * 1.5 * 3);
             }
         }
         .crowdfundingInfo{
@@ -64,7 +64,7 @@
             .topInfo{
                 font-weight: bold;
                 align-items: end;
-                .accumulationPrice{
+                .accumulationAmount{
                     font-size: 1rem;
                     line-height: 1rem;
                     font-weight: bold;

@@ -1031,18 +1031,18 @@ html, body {
   margin-bottom: 1rem;
   font-weight: bold;
   font-size: 1rem;
-  line-height: 1rem;
+  line-height: 1.5rem;
   text-align: start;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  height: calc(1rem * 2);
+  height: calc(1rem * 1.5 * 2);
   overflow: hidden;
 }
 
 #bodyContent ul.promo .pd_title.product {
   -webkit-line-clamp: 3;
-  height: calc(1rem * 3);
+  height: calc(1rem * 1.5 * 3);
 }
 
 #bodyContent ul.promo .crowdfundingInfo {
@@ -1081,7 +1081,7 @@ html, body {
           align-items: end;
 }
 
-#bodyContent ul.promo .crowdfundingInfo .topInfo .accumulationPrice {
+#bodyContent ul.promo .crowdfundingInfo .topInfo .accumulationAmount {
   font-size: 1rem;
   line-height: 1rem;
   font-weight: bold;
@@ -1148,19 +1148,142 @@ html, body {
   position: relative;
 }
 
-#pdSlider .banner .picBox {
+#pdSlider .bannerBlock .picBox {
   overflow: hidden;
 }
 
-#pdSlider .banner .picBox .pic {
+#pdSlider .bannerBlock .picBox .pic {
   max-width: 100%;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-#pdSlider .banner:hover .picBox .pic {
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
+#pdSlider .bannerBlock .infomation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#pdSlider .bannerBlock .infomation .name {
+  font-size: 1.25rem;
+  line-height: 1.875rem;
+  font-weight: bold;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-weight: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo:hover {
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .topInfo, #pdSlider .bannerBlock .infomation .crowdfundingInfo .bar {
+  margin-bottom: 0.5rem;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .topInfo, #pdSlider .bannerBlock .infomation .crowdfundingInfo .bottomInfo {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .topInfo {
+  font-weight: bold;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: end;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .topInfo .accumulationAmount {
+  font-size: 1rem;
+  line-height: 1rem;
+  font-weight: bold;
+  color: #212121;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .topInfo .countDown {
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  font-weight: bold;
+  color: #FBC100;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .bar {
+  background-color: #EEEEEE;
+  width: 100%;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .bar .progress {
+  height: 0.5rem;
+  background: #FBC100;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
+#pdSlider .bannerBlock .infomation .crowdfundingInfo .bottomInfo {
+  color: #9E9E9E;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+}
+
+#pdSlider .bannerBlock .infomation .discription {
+  font-size: 0.75rem;
+  line-height: 1.125rem;
+  font-weight: normal;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  overflow: hidden;
+}
+
+#pdSlider .bannerBlock .infomation .company {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#pdSlider .bannerBlock .infomation .company .pic {
+  width: 2rem;
+  height: 2rem;
+  margin-right: 0.25rem;
+}
+
+#pdSlider .bannerBlock .infomation .company .pic img {
+  width: 2rem;
+  border-radius: 100%;
+}
+
+#pdSlider .bannerBlock .infomation .company .name {
+  font-weight: normal;
+  font-size: 0.75rem;
 }
 
 #pdSlider .swiper-slide {
@@ -1322,6 +1445,157 @@ html, body {
   .card_note .left {
     font-size: 160%;
   }
+}
+
+#aboutUs .data {
+  padding: 4rem 0;
+  background-color: #193563;
+}
+
+@media (min-width: 768px) {
+  #aboutUs .data {
+    padding: 8rem 0;
+  }
+}
+
+#aboutUs .data .title, #aboutUs .data .discription {
+  color: white;
+  text-align: center;
+}
+
+#aboutUs .data .discription {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+#aboutUs .data .infomation div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#aboutUs .data .infomation div h3 {
+  color: #FBC100;
+}
+
+#aboutUs .data .infomation div p {
+  font-size: 0.75rem;
+  color: white;
+}
+
+#aboutUs .data .infomation div:hover {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+}
+
+#aboutUs .data .cta {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#aboutUs .data .cta a {
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  background-color: #FBC100;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.25rem 0;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+#aboutUs .data .cta a:hover {
+  background-color: #e2ad00;
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+#contactUs .block {
+  background-color: #EEEEEE;
+}
+
+#contactUs .block .infomation {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-top: 3rem;
+}
+
+@media (max-width: 768px) {
+  #contactUs .block .infomation {
+    padding-top: 1.5rem;
+  }
+}
+
+#contactUs .block .infomation .discriptionGroup .discription {
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+}
+
+@media (max-width: 768px) {
+  #contactUs .block .infomation .discriptionGroup .discription {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+}
+
+#contactUs .block .infomation .discriptionGroup .buttonGroup {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 -0.5rem;
+  max-width: 465px;
+}
+
+#contactUs .block .infomation .discriptionGroup .buttonGroup div {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  margin: 0 0.5rem;
+}
+
+#contactUs .block .infomation .discriptionGroup .buttonGroup div a {
+  text-decoration: none;
+  color: white;
+  text-align: center;
+  padding: 0.25rem 0rem;
+  font-weight: bold;
+  border-radius: 0.25rem;
+}
+
+#contactUs .block .infomation .pic {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#contactUs .block .infomation .pic img {
+  width: 100%;
 }
 
 /* ---------- 共用  ----------*/

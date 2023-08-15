@@ -37,6 +37,10 @@ html, body {
 @import '_footer.scss';
 //裝飾框
 @import '_blockDeco.scss';
+//關於我們
+@import '_aboutUs.scss';
+//聯絡我們
+@import '_contactUs.scss';
 
 /* ---------- 共用  ----------*/
 .hide           { display: none !important; }

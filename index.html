@@ -171,7 +171,7 @@
     <div class="wrap" :style="{backgroundColor:webInfo.bgColor,backgroundImage:'url('+webInfo.bgImg+')'}">
         <div :style="{backgroundColor:webInfo.bgColor,backgroundImage:'url('+webInfo.bgImgM+')'}" class="bgM w-100 h-100 position-absolute"></div>
         <!-- 版頭輪播 -->
-        <div :class="{container: !mainSlider.fluid}+' mb-5'" id="main_slider" v-if="mainSlider.show">
+        <div :class="{container: !mainSlider.fluid}" id="main_slider" v-if="mainSlider.show">
             <div class="swiper-container">
                 <div class="swiper-wrapper">
                     <template v-for="(slide,i) in mainSlider.content">
@@ -188,20 +188,89 @@
         </div>
         <!-- END // 版頭輪播 -->
 
-        <article class="d-flex flex-column mt-4">
-            <!-- 主打品輪播 -->
+        
+        <article class="d-flex flex-column">
+            <!-- AboutUs開始 -->
+            <template>
+                <section id="aboutUs" class="mb-4">
+                    <div class="data">
+                        <div class="container">
+                            <div class="row mb-3 title">
+                                <h3 class="col-12" v-html="aboutUs.title"></h3>
+                            </div>
+                            <div class="row mb-5 discription">
+                                <p class="col-md-6 col-12" v-html="aboutUs.discription"></p>
+                            </div>
+                            <div class="row infomation mb-5">
+                                <div class="col-md-4 col-12 mb-4 mb-md-0">
+                                    <h3 class="mb-1" v-html="aboutUs.accumulationProject"></h3>
+                                    <p>累積專案</p>
+                                </div>
+                                <div class="col-md-4 col-12 mb-4 mb-md-0">
+                                    <h3 class="mb-1" v-html="aboutUs.accumulationAmount"></h3>
+                                    <p>累積金額</p>
+                                </div>
+                                <div class="col-md-4 col-12 mb-0">
+                                    <h3 class="mb-1" v-html="aboutUs.accumulationSponsor"></h3>
+                                    <p>累積贊助人數</p>
+                                </div>
+                            </div>
+                            <div class="row cta">
+                                <div class="col-lg-4 col-md-6 col-12">
+                                    <a href="#" class="">前往官網</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+            <!-- END // AboutUs -->
+
+            <!-- 主打專案 -->
             <template v-for="(block ,i) in pdSlider">
                 <section id="pdSlider" class="mb-4" :style="{order:block.order}" v-if="block.show">
                     <div class="container swiper-container">
                         <div class="row mb-3">
                             <h3 class="col-12">{{block.title}}</h3>
                         </div>
-                        <div class="row mb-3 banner">
-                            <a href="#" class="col-12">
+                        <div class="row mb-3 bannerBlock">
+                            <div class="col-12 col-md-8 mb-2 mb-md-0">
                                 <div class="picBox">
-                                    <img :src="block.banner" class="d-block pic">
+                                    <img :src="block.bannerBlock.pic" class="d-block pic">
                                 </div>
-                            </a>
+                            </div>
+                            <div class="col-12 col-md-4 infomation">
+                                <h4 class="name mb-3" v-html="block.bannerBlock.name"></h4>
+                                <div class="crowdfundingInfo mb-3">
+                                    <div class="topInfo">
+                                        <p class=accumulationAmount v-html=" 'NT$ ' + block.bannerBlock.crowdfunding.accumulationAmount"></p>
+                                        <p></p>
+                                        <p v-if="getCountDown(block.bannerBlock.crowdfunding.deadLine) > 1" class="countDown"
+                                            v-html=" '倒數' + getCountDown(block.bannerBlock.crowdfunding.deadLine) + '天' "></p>
+                                        <p v-else-if="getCountDown(block.bannerBlock.crowdfunding.deadLine) == 0" class="countDown">剩下不到1天</p>
+                                        <p v-else class="countDown">募資已結束</p>
+                                    </div>
+                                    <div class="bar">
+                                        <div v-if="getPercentage(block.bannerBlock.crowdfunding.accumulationAmount, block.bannerBlock.crowdfunding.goalPrice) < 100"
+                                            class="progress"
+                                            :style="{width: getPercentage(block.bannerBlock.crowdfunding.accumulationAmount, block.bannerBlock.crowdfunding.goalPrice) + '%'}">
+                                        </div>
+                                        <div v-else class="progress"></div>
+                                    </div>
+                                    <div class="bottomInfo">
+                                        <p class=accumulationSponsor v-html="'累積 ' + block.bannerBlock.crowdfunding.accumulationSponsor + ' 人支持'"></p>
+                                        <p class="percentage"
+                                            v-html="getPercentage(block.bannerBlock.crowdfunding.accumulationAmount, block.bannerBlock.crowdfunding.goalPrice) + '%'"></p>
+                                    </div>
+                                </div>
+                                <a class="company mb-3">
+                                    <div class="pic d-block">
+                                        <img :src="block.bannerBlock.company.pic">
+                                    </div>
+                                    <p class="name" v-html="block.bannerBlock.company.name"></p>
+                                </a>
+                                <p class="discription" v-html="block.bannerBlock.discription"></p>
+                            </div>
                         </div>
                         <ul class="swiper-wrapper promo mb-1">
                             <template v-for="(card ,k) in block.content">
@@ -211,7 +280,7 @@
                                             <img :src="card.pic" class="d-block pic">
                                         </div>
                                         <div class="pd_title" v-html="card.name"></div>
-                                        <div class="price">${{card.hot_price}}</div>
+                                        <div class=price>${{card.hot_price}}</div>
                                     </a>
                                 </li>
                             </template>
@@ -224,7 +293,7 @@
                     </div>
                 </section>
             </template>
-            <!-- END // 主打品輪播 -->
+            <!-- END // 主打專案 -->
 
             <!-- 影片區塊 -->
             <!-- <template v-for="(block ,i) in youtube">
@@ -240,6 +309,30 @@
                 </section>
             </template> -->
             <!-- END // 影片區塊 -->
+
+            <!-- ContactUs開始 -->
+            <template>
+                <section id="contactUs" class="mb-4">
+                    <div class="block">
+                        <div class="container">
+                            <div class="row infomation">
+                                <div class="col-8 col-md-8 discriptionGroup">
+                                    <div class="discription mb-3" v-html="contactUs.discription"></div>
+                                    <div class="buttonGroup">
+                                        <div v-for="button in contactUs.button">
+                                            <a v-html="button.title" :href="button.link" :style="{backgroundColor : button.backgroundColor}"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 col-md-4 pic">
+                                    <img :src="contactUs.pic" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </template>
+            <!-- END // ContactUs -->
             
             <!-- 內容區塊 -->
             <template v-for="(block ,i) in bodyContent">
@@ -255,30 +348,29 @@
                                         <div class="picBox">
                                             <img :src="card.pic" class="d-block pic">
                                         </div>
-                                        <div class="company" v-html="card.company"></div>
+                                        <div class=company v-html="card.company"></div>
                                         <div class="pd_title" :class="{ product: card.crowdfunding == null}" v-html="card.name"></div>
                                         <div v-if="card.crowdfunding" class="crowdfundingInfo">
                                             <div class="topInfo">
-                                                <p class="accumulationPrice" v-html=" 'NT$ ' + card.crowdfunding.accumulationPrice"></p>
+                                                <p class=accumulationAmount v-html=" 'NT$ ' + card.crowdfunding.accumulationAmount"></p>
                                                 <p></p>
                                                 <p v-if="getCountDown(card.crowdfunding.deadLine) > 1" class="countDown" v-html=" '倒數' + getCountDown(card.crowdfunding.deadLine) + '天' "></p>
                                                 <p v-else-if="getCountDown(card.crowdfunding.deadLine) == 0" class="countDown">剩下不到1天</p>
                                                 <p v-else class="countDown">募資已結束</p>
                                             </div>
                                             <div class="bar">
-                                                <div v-if="getPercentage(card.crowdfunding.accumulationPrice, card.crowdfunding.goalPrice) < 100" class="progress" :style="{width: getPercentage(card.crowdfunding.accumulationPrice, card.crowdfunding.goalPrice) + '%'}"></div>
+                                                <div v-if="getPercentage(card.crowdfunding.accumulationAmount, card.crowdfunding.goalPrice) < 100" class="progress" :style="{width: getPercentage(card.crowdfunding.accumulationAmount, card.crowdfunding.goalPrice) + '%'}"></div>
                                                 <div v-else class="progress"></div>
                                             </div>
                                             <div class="bottomInfo">
-                                                <p class="accumulationSponsor" v-html="'累積 ' + card.crowdfunding.accumulationSponsor + ' 人支持'"></p>
-                                                <p class="percentage" v-html="getPercentage(card.crowdfunding.accumulationPrice, card.crowdfunding.goalPrice) + '%'"></p>
+                                                <p class=accumulationSponsor v-html="'累積 ' + card.crowdfunding.accumulationSponsor + ' 人支持'"></p>
+                                                <p class="percentage" v-html="getPercentage(card.crowdfunding.accumulationAmount, card.crowdfunding.goalPrice) + '%'"></p>
                                             </div>
                                         </div>
-                                        <div v-if="card.price" class="price">
+                                        <div v-if="card.price" class=price>
                                             <p v-if="card.price.hot_price" class="hotPrice">${{card.price.hot_price}}</p>
                                             <p class="mainPrice" :class="{ only: card.price.hot_price != null}">${{card.price.main_price}}</p>
                                         </div>
-                                        
                                     </a>
                                 </li>
                             </template>
@@ -288,11 +380,12 @@
             </template>
             <!-- END // 內容區塊 -->
         </article>
+        <!-- END // 版頭輪播 -->
     </div>
     <!-- END // 版身 -->
 
     <!-- 影片燈箱 -->
-    <div class="modal fade" id="video_box" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- <div class="modal fade" id="video_box" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
@@ -305,7 +398,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- END // 影片燈箱 -->
 </div>
 
@@ -469,94 +562,133 @@
     };
 
     // ----------------
+    // 關於我們
+    // ----------------
+    var aboutUs = {
+        title: "在MYFEEL，一切都有可能",
+        discription: "MYFEEL 亞洲跨國集資平台，相信所有好想法、好點子都有實現的可能，我們協助各專案被世界看見，更整合所有你想得到的、想不到的跨國多元提案！",
+        accumulationProject: "110",
+        accumulationAmount: "136,995,903",
+        accumulationSponsor: "40,039"
+    }
+
+    // ----------------
     // 版頭輪播(搭配標題圖)
     // ----------------
     var pdSlider = [
         {
             show: true, //是否需要此區塊 true 或 false
             order: "0", // 區塊順序
-            title: "HEISR 三面電動牙刷",
-            banner: "img/gallery/mainSlider_1.webp",
+            title: "熱門專案",
+            bannerBlock:{
+                pic: "img/gallery/mainSlider_1.webp",
+                name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                crowdfunding: {
+                    goalPrice: 50000,
+                    deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                    accumulationAmount: 15000,
+                    accumulationSponsor: 10,
+                },
+                company: {
+                    name: "HEISR",
+                    pic: "img/campaign/campaign01_company.webp",
+                },
+                discription: "HEISR 致力於創新設計解決日常潔牙問題。傳統的刷牙工具由於人嘴張開的角度有限，無法有效清潔牙齒內部。HEISR 花了 4 年的時間研究、開發和生產革命性的包覆式三面電動牙刷，至今已擁有 30 多項獨家專利。"
+            },
             content: [
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp",
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp",
                 },
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp"
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp"
                 },
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp"
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp"
                 },
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp"
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp"
                 },
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp"
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp"
                 },
                 {
-                    "name": "早鳥優惠價",
-                    "hot_price": "3180",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign01.webp"
+                    name: "早鳥優惠價",
+                    hot_price: "3180",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign01.webp"
                 },
             ]
         },
         {
             show: true, //是否需要此區塊 true 或 false
             order: "0", // 區塊順序
-            title: "航太級純鈦砧板",
-            banner: "img/gallery/mainSlider_2.webp",
+            title: "熱門專案",
+            bannerBlock: {
+                pic: "img/gallery/mainSlider_2.webp",
+                name: "料理新革命！航太級純鈦砧板｜抗菌不發霉，全新尺寸更輕薄",
+                crowdfunding: {
+                    goalPrice: 50000,
+                    deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                    accumulationAmount: 15000,
+                    accumulationSponsor: 10,
+                },
+                company: {
+                    name: "挖貝 Wabay X TiANN鈦安",
+                    pic: "img/campaign/campaign02_company.webp",
+                },
+                discription: "你可能覺得，反正都是金屬，為什麼用不鏽鋼砧板就好？會這樣想，代表你還不理解鈦金屬有多好！TiANN 鈦安這次推出「料理新革命！航太級純鈦砧板」，讓你把愛留給家人，怎麼切都不發霉不起屑！"
+            },
             content: [
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
                 {
-                    "name": "盛夏限定7折 | 基本配備組",
-                    "hot_price": "3369",
-                    "link": "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
-                    "pic": "img/campaign/campaign02.webp"
+                    name: "盛夏限定7折 | 基本配備組",
+                    hot_price: "3369",
+                    link: "https://24h.pchome.com.tw/prod/DMAGAN-A9009H3QS?fq=/S/DECS00",
+                    pic: "img/campaign/campaign02.webp"
                 },
             ]
         },
@@ -574,88 +706,88 @@
             theme: "",
             content: [ 
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice": 15000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount: 15000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp",
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp",
                 },
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice":37000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount:37000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp"
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp"
                 },
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice": 2000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount: 2000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp"
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp"
                 },
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice": 120000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount: 120000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp"
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp"
                 },
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice": 5000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount: 5000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp"
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp"
                 },
                 {
-                    "grid": "col-12 col-md-6 col-lg-4",
-                    "name": "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
-                    "company": "HEISR",
-                    "price": null,
-                    "crowdfunding": {
-                        "goalPrice": 50000,
-                        "deadLine": new Date(2023, 10, 10, 17, 56).getTime(),
-                        "accumulationPrice": 42000,
-                        "accumulationSponsor": 10,
+                    grid: "col-12 col-md-6 col-lg-4",
+                    name: "HEISR 三面電動牙刷 | 讓你的牙齒，遇見對的牙刷",
+                    company: "HEISR",
+                    price: null,
+                    crowdfunding: {
+                        goalPrice: 50000,
+                        deadLine: new Date(2023, 10, 10, 17, 56).getTime(),
+                        accumulationAmount: 42000,
+                        accumulationSponsor: 10,
                     },
-                    "link": "#",
-                    "pic": "img/crowdfunding/crowdfunding01.webp"
+                    link: "#",
+                    pic: "img/crowdfunding/crowdfunding01.webp"
                 },
             ],
         },
@@ -666,105 +798,124 @@
             theme: "",
             content: [
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": 1590,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: 1590,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": null,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: null,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": 1590,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: 1590,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 3990,
-                        "hot_price": null,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 3990,
+                        hot_price: null,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": 1590,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: 1590,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 5990,
-                        "hot_price": null,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 5990,
+                        hot_price: null,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": 1590,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: 1590,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
                 {
-                    "grid": "col-6 col-md-3",
-                    "name": "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
-                    "company": "NWT 威技",
-                    "price": {
-                        "main_price": 2990,
-                        "hot_price": 1590,
+                    grid: "col-6 col-md-3",
+                    name: "【就是好扇】NWT威技 WIFI智能16吋日本DC節能颶風電風扇(WPF-16SW5)",
+                    company: "NWT 威技",
+                    price: {
+                        main_price: 2990,
+                        hot_price: 1590,
                     },
-                    "crowdfunding": null,
-                    "link": "#",
-                    "pic": "img/product/product01.webp"
+                    crowdfunding: null,
+                    link: "#",
+                    pic: "img/product/product01.webp"
                 },
             ],
         },
     ];
 
+    // ----------------
+    // 聯絡我們
+    // ----------------
+    var contactUs = {
+        discription: "加入MYFEEL官方LINE or EDM</br>將可以獲得商品最新消息以及專屬優惠哦！",
+        button:[
+            {
+                title:"加入Line",
+                backgroundColor: "#2EB954",
+                link:"#"
+            },
+            {
+                title: "加入EDM",
+                backgroundColor: "#193563",
+                link: "#"
+            },
+        ],
+        pic: "img/contactUs.png",
+    }
     // ----------------
     // 影片
     // ----------------
@@ -802,8 +953,8 @@
                 getCountDown(deadLine){
                     return Math.floor((deadLine - Date.now()) / 86400000 - 31)
                 },
-                getPercentage(accumulationPrice,goalPrice){
-                    let percentage = accumulationPrice/ goalPrice * 100;
+                getPercentage(accumulationAmount,goalPrice){
+                    let percentage = accumulationAmount/ goalPrice * 100;
                     return percentage;
                 }
             },
