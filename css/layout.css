@@ -985,6 +985,7 @@ html, body {
 #bodyContent ul.promo .picBox {
   margin-bottom: 1rem;
   overflow: hidden;
+  border-radius: 1.5rem 0 1.5rem 0;
 }
 
 #bodyContent ul.promo .picBox .pic {
@@ -1149,6 +1150,7 @@ html, body {
 }
 
 #pdSlider .bannerBlock .picBox {
+  border-radius: 2rem 0 2rem 0;
   overflow: hidden;
 }
 
@@ -1509,7 +1511,7 @@ html, body {
 #aboutUs .data .cta a {
   text-align: center;
   text-decoration: none;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem 0 0.75rem 0;
   background-color: #FBC100;
   color: white;
   font-size: 1rem;
@@ -1596,7 +1598,7 @@ html, body {
   text-align: center;
   padding: 0.25rem 0rem;
   font-weight: bold;
-  border-radius: 0.25rem;
+  border-radius: 0.75rem 0 0.75rem;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
